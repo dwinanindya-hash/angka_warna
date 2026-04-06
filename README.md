@@ -1,0 +1,2 @@
+# angka_warna
+warnaadalahangka
