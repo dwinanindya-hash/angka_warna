@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simulasi Pixel Digital</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e1bee7);
+    }
+
+    h2 {
+      margin-top: 20px;
+    }
+
+    canvas {
+      border: 2px solid black;
+      margin-top: 15px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+    }
+
+    #info {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .box {
+      background: white;
+      display: inline-block;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Eksperimen Pixel & Warna Digital</h2>
+  <p>Sentuh salah satu kotak untuk melihat bagaimana warna terbentuk dari angka</p>
+
+  <canvas id="canvas" width="400" height="400"></canvas>
+
+  <p id="info">Belum ada pixel yang dipilih</p>
+</div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+// ukuran kotak diperbesar (biar nggak terlalu banyak)
+const size = 40;
+const cols = canvas.width / size;
+const rows = canvas.height / size;
+
+// buat grid awal (abu-abu)
+for (let x = 0; x < cols; x++) {
+  for (let y = 0; y < rows; y++) {
+    ctx.fillStyle = "#dddddd";
+    ctx.fillRect(x * size, y * size, size, size);
+    ctx.strokeRect(x * size, y * size, size, size);
+  }
+}
+
+// klik pixel
+canvas.addEventListener("click", function(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor((e.clientX - rect.left) / size);
+  const y = Math.floor((e.clientY - rect.top) / size);
+
+  // warna random
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+
+  ctx.fillStyle = `rgb(${r},${g},${b})`;
+  ctx.fillRect(x * size, y * size, size, size);
+  ctx.strokeRect(x * size, y * size, size, size);
+
+  document.getElementById("info").innerText =
+    `Koordinat (${x}, ${y})   kombinasi warna: [${r}, ${g}, ${b}]`;
+});
+</script>
+
+</body>
+</html>
